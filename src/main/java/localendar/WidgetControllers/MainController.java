@@ -721,6 +721,10 @@ public class MainController implements Initializable {
                 toDateFilter = null;
                 fromDateFilter = null;
             }
+            else{
+                toDateFilter = dateTo.getValue();
+                fromDateFilter = dateFrom.getValue();
+            }
         }
 
         // Handle time range filtering (optional)

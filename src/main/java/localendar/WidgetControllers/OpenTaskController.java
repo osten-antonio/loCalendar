@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import localendar.Frequency;
 import localendar.Task;
 
 import java.net.URL;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class OpenTaskController implements Initializable {
     @FXML
-    private Text categoryText, dueDate, dueTime, rRuleFrequency, rRuleInterval, rRuleEndDate, priorityText;
+    private Text categoryText, dueDate, dueTime, rRuleFrequency, rRuleInterval, rRuleEndDate, priorityText, recurrenceLabel;
     @FXML
     private TextField taskTitle;
     @FXML
@@ -47,10 +48,17 @@ public class OpenTaskController implements Initializable {
 
         dueDate.setText(task.getDueDate().format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")));
         dueTime.setText(task.getDueTime().toString());
+        if(task.getRrule().getFrequency() != Frequency.NONE){
+            recurrenceLabel.setText("Recurrence Rule: ");
+            rRuleFrequency.setText("Frequency: " +
+                    task.getRrule().getFrequency().name().charAt(0) +
+                    task.getRrule().getFrequency().name().substring(1).toLowerCase());
+            rRuleInterval.setText("Interval: " + task.getRrule().getInterval());
+            if(task.getRrule().getEndDate().isPresent()) {
+                rRuleEndDate.setText("End date: " + task.getRrule().getEndDate().get());
+            }
+        }
 
-        rRuleFrequency.setText(task.getRrule().getFrequency().name());
-        rRuleInterval.setText(String.valueOf(task.getRrule().getInterval()));
-        rRuleEndDate.setText(task.getRrule().getEndDate().toString());
     }
     public void setMain(MainController main){
         this.main = main;

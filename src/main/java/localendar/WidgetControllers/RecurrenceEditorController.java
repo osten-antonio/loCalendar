@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class RecurrenceEditorController implements Initializable {
@@ -25,6 +26,7 @@ public class RecurrenceEditorController implements Initializable {
 
     @FXML
     private Button setButton;
+
 
     private TaskCreateController caller;
 
@@ -45,7 +47,7 @@ public class RecurrenceEditorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        freqBox.getItems().addAll("Daily", "Monthly", "Weekly", "Yearly");
+        freqBox.getItems().addAll("None","Daily", "Monthly", "Weekly", "Yearly");
         intervalSpin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                 1,
                 365,

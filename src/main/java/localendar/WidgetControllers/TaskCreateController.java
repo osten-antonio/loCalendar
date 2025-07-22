@@ -127,7 +127,7 @@ public class TaskCreateController implements Initializable {
     }
 
     public void setEndDate(LocalDate dateEnd){
-        Optional.ofNullable(dateEnd);
+        endDate = Optional.ofNullable(dateEnd);
     }
 
     public void setInterval(int interval){
@@ -159,6 +159,8 @@ public class TaskCreateController implements Initializable {
             String sqlFreq = freq == null ? "" : freq.toString();
             String sqlInterval = interval == null ? "" : interval.toString();
             String sqlEndDate = endDate.map(localDate -> localDate.format(formatter)).orElse("");
+            if(endDate.isPresent()) System.out.println("EJDDDDDATEEEE"+endDate.get());
+            else System.out.println(endDate);
             Task resTask = new Task(taskTitle.getText(),taskBody.getText(),false,dueDate.getValue(),
                     LocalTime.of(dueHour.getValue(),dueMinute.getValue()), level,
                     String.format("FREQ=%s;INTERVAL=%s;UNTIL=%s",sqlFreq,sqlInterval,sqlEndDate),

@@ -142,6 +142,7 @@ public class Task {
         LocalDate endDate = null;
 
         for (String part : parts) {
+//            System.out.println("part" + part);
             if (part.startsWith("FREQ=")) {
                 String value = part.substring(5);
 
@@ -151,6 +152,7 @@ public class Task {
                 interval = Integer.parseInt(part.substring(9));
             } else if (part.startsWith("UNTIL=")) {
                 String dateStr = part.substring(6);
+//                System.out.println("UNTIL:" + dateStr);
                 if (!dateStr.isBlank()) {
                     endDate = LocalDate.parse(dateStr);
                 }
@@ -188,6 +190,11 @@ public class Task {
             public boolean hasNext() {
                 while (recurrenceDates.hasNext()) {
                     LocalDate candidate = recurrenceDates.next();
+                    if(rrule.getEndDate().isPresent())System.out.println(rrule.getEndDate().get());
+                    if(rrule.getEndDate().isPresent() &&
+                            candidate.isAfter(rrule.getEndDate().get())){
+                        return false;
+                    }
                     if (limitDate != null && candidate.isAfter(limitDate)) {
                         return false;
                     }

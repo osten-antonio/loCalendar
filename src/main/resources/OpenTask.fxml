@@ -31,14 +31,14 @@
                      </font>
                   </Text>
                   <Text fx:id="dueTime" layoutX="12.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <Text layoutX="8.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recurrence rule:">
+                  <Text fx:id="recurrenceLabel" layoutX="8.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text fx:id="rRuleFrequency" layoutX="12.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency:" />
-                  <Text fx:id="rRuleInterval" layoutX="12.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Interval:" />
-                  <Text fx:id="rRuleEndDate" layoutX="12.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End date:" />
+                  <Text fx:id="rRuleFrequency" layoutX="12.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="rRuleInterval" layoutX="12.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="rRuleEndDate" layoutX="12.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                   <Button layoutX="6.0" layoutY="379.0" mnemonicParsing="false" onMouseClicked="#edit" prefHeight="25.0" prefWidth="144.0" text="Edit" />
                   <Rectangle fx:id="priorityRec" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="23.0" layoutX="7.0" layoutY="247.0" stroke="BLACK" strokeType="INSIDE" width="142.0" />
                   <Text fx:id="priorityText" layoutX="67.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" />
