@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -75,9 +76,11 @@ public class CategoriesItemController {
             Parent categoriesRoot = loader.load();
             CategoryCreationController controller = loader.getController();
             controller.setEdit(category);
+            controller.setMain(main);
             controller.setCaller(callerController);
             Stage categoriesWindow = new Stage();
             categoriesWindow.setTitle("Categories");
+            categoriesWindow.getIcons().add(new Image("icon.jpg"));
             categoriesWindow.setScene(new Scene(categoriesRoot, 600, 214));
             categoriesWindow.setResizable(false);
 

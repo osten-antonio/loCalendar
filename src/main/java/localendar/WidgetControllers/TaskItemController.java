@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -99,6 +100,7 @@ public class TaskItemController {
             controller.setMain(main);
             controller.setTask(task);
             Stage taskWindow = new Stage();
+            taskWindow.getIcons().add(new Image("icon.jpg"));
             taskWindow.setTitle(task.getTitle());
             taskWindow.setScene(new Scene(openTask, 692, 411));
             taskWindow.setResizable(false);
@@ -145,6 +147,7 @@ public class TaskItemController {
 
             Stage taskWindow = new Stage();
             taskWindow.setTitle("Create task");
+            taskWindow.getIcons().add(new Image("icon.jpg"));
             taskWindow.setScene(new Scene(taskRoot, 600, 400));
             taskWindow.setResizable(false);
 
@@ -163,6 +166,7 @@ public class TaskItemController {
     @FXML
     private void setStatus(){
         Database db= new Database();
+        task.setStatus(taskStatus.isSelected());
         db.updateCheck(task,taskStatus.isSelected());
         db.closeConnection();
     }

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -64,6 +65,7 @@ public class OpenTaskController implements Initializable {
             controler.setEdit(task);
 
             Stage taskWindow = new Stage();
+            taskWindow.getIcons().add(new Image("icon.jpg"));
             taskWindow.setTitle("Create task");
             taskWindow.setScene(new Scene(taskRoot, 600, 400));
             taskWindow.setResizable(false);

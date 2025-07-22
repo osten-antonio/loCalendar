@@ -61,9 +61,14 @@ public class CategoryCreationController {
                 }
             }
 
+            category.setName(resCategory.getName());
+            category.setColor(resCategory.getColor());
+            category.setTextColor(resCategory.getTextColor());
             db.closeConnection();
             Stage stage = (Stage) categoryName.getScene().getWindow();
             caller.refreshCategories();
+            main.refreshCache();
+            main.refreshTaskList(main.getTasks());
             stage.close();
         });
     }

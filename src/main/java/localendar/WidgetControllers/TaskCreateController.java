@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import localendar.*;
@@ -89,6 +90,7 @@ public class TaskCreateController implements Initializable {
 
                     Stage categoryWindow = new Stage();
                     categoryWindow.setTitle("Create category");
+                    categoryWindow.getIcons().add(new Image("icon.jpg"));
                     categoryWindow.setScene(new Scene(categoryRoot, 600, 214));
                     categoryWindow.setResizable(false);
 
@@ -263,6 +265,7 @@ public class TaskCreateController implements Initializable {
 
             Stage recurrenceWindow = new Stage();
             recurrenceWindow.setTitle("Recurrence rule");
+            recurrenceWindow.getIcons().add(new Image("icon.jpg"));
             recurrenceWindow.setScene(new Scene(rRuleEditorRoot, 341, 160));
             recurrenceWindow.setResizable(false);
 

@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -73,6 +74,7 @@ public class CategoriesController {
 
             Stage categoriesWindow = new Stage();
             categoriesWindow.setTitle("Categories");
+            categoriesWindow.getIcons().add(new Image("icon.jpg"));
             categoriesWindow.setScene(new Scene(categoriesRoot, 600, 214));
             categoriesWindow.setResizable(false);
 

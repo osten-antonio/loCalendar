@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -52,6 +53,7 @@ public class CalendarTaskItemController {
             controller.setTask(task);
             Stage taskWindow = new Stage();
             taskWindow.setTitle(task.getTitle());
+            taskWindow.getIcons().add(new Image("icon.jpg"));
             taskWindow.setScene(new Scene(openTask, 692, 411));
             taskWindow.setResizable(false);
 

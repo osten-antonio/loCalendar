@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -35,7 +36,7 @@ public class MainController implements Initializable {
     private final HashMap<Integer, Category> categories = db.getCategories();
 
     private final PriorityQueue<Task> tasks = new PriorityQueue<>(new TaskComparator());
-    // Add ChangeListener for search
+
     @FXML
     private VBox taskArea,
 
@@ -355,6 +356,7 @@ public class MainController implements Initializable {
                                         controller.setTask(selectedTask);
 
                                         Stage taskWindow = new Stage();
+                                        taskWindow.getIcons().add(new Image("icon.jpg"));
                                         taskWindow.setTitle(selectedTask.getTitle());
                                         taskWindow.setScene(new Scene(openTask, 692, 411));
                                         taskWindow.setResizable(false);
@@ -499,6 +501,7 @@ public class MainController implements Initializable {
                                     controller.setTask(selectedTask);
 
                                     Stage taskWindow = new Stage();
+                                    taskWindow.getIcons().add(new Image("icon.jpg"));
                                     taskWindow.setTitle(selectedTask.getTitle());
                                     taskWindow.setScene(new Scene(openTask, 692, 411));
                                     taskWindow.setResizable(false);
@@ -573,6 +576,7 @@ public class MainController implements Initializable {
 
             Stage taskWindow = new Stage();
             taskWindow.setTitle("Create task");
+            taskWindow.getIcons().add(new Image("icon.jpg"));
             taskWindow.setScene(new Scene(taskRoot, 600, 400));
             taskWindow.setResizable(false);
 
@@ -600,6 +604,7 @@ public class MainController implements Initializable {
 
             Stage categoriesWindow = new Stage();
             categoriesWindow.setTitle("Categories");
+            categoriesWindow.getIcons().add(new Image("icon.jpg"));
             categoriesWindow.setScene(new Scene(categoriesRoot, 640, 480));
             categoriesWindow.setResizable(false);
 
@@ -704,7 +709,7 @@ public class MainController implements Initializable {
         }
 
         if (enableDateRange.isSelected()) {
-            if (dateFrom.getValue() == null && toDateFilter != null) {
+            if (dateFrom.getValue() == null && dateTo.getValue() != null) {
                 fromDateFilter = null;
                 toDateFilter = dateTo.getValue();
             }
@@ -736,7 +741,10 @@ public class MainController implements Initializable {
             }
 
             if (enableDateRange.isSelected()) {
+                System.out.println(fromDateFilter);
+                System.out.println(toDateFilter);
                 if (fromDateFilter == null && toDateFilter != null) {
+
                     if (task.getDueDate().isAfter(toDateFilter)) {
                         matches = false;
                     }
@@ -744,11 +752,12 @@ public class MainController implements Initializable {
                     if (task.getDueDate().isBefore(fromDateFilter) || task.getDueDate().isAfter(toDateFilter)) {
                         matches = false;
                     }
-                } else if (fromDateFilter != null) {
+                } else if (fromDateFilter != null && toDateFilter ==null) {
                     if (task.getDueDate().isBefore(fromDateFilter)) {
                         matches = false;
                     }
                 }
+
             }
 
             if (enableTimeRange.isSelected()) {
@@ -960,6 +969,7 @@ public class MainController implements Initializable {
             RecurrenceEditorController controller=loader.getController();
             controller.setForFilter(rRuleFilter);
             Stage recurrenceWindow = new Stage();
+            recurrenceWindow.getIcons().add(new Image("icon.jpg"));
             recurrenceWindow.setTitle("Recurrence rule");
             recurrenceWindow.setScene(new Scene(rRuleEditorRoot, 341, 160));
             recurrenceWindow.setResizable(false);

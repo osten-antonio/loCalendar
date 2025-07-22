@@ -3,6 +3,7 @@ package localendar;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
@@ -21,20 +22,22 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/mainWindow.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+        stage.setTitle("loCalendar");
+        stage.getIcons().add(new Image("icon.jpg"));
         stage.setResizable(false);
         stage.show();
     }
 
     public static void main(String[] args) {
-//        System.setOut(new PrintStream(new OutputStream() {
-//            public void write(int b) {}
-//        }));
-//
-//        System.setErr(new PrintStream(new OutputStream() {
-//            public void write(int b) {}
-//        }));
-//
-//        Logger.getLogger("javafx.fxml").setLevel(Level.SEVERE);
+        System.setOut(new PrintStream(new OutputStream() {
+            public void write(int b) {}
+        }));
+
+        System.setErr(new PrintStream(new OutputStream() {
+            public void write(int b) {}
+        }));
+
+        Logger.getLogger("javafx.fxml").setLevel(Level.SEVERE);
         launch();
     }
 }
