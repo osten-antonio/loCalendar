@@ -30,15 +30,6 @@ public class CategoriesController {
     private MainController main;
 
     Database db;
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//        db = new Database();
-//        categories=db.getCategories(true);
-//        categories.keySet().forEach(key ->
-//            generateCategoryItem(categories.get(key))
-//        );
-//
-//    }
 
     public void setMain(MainController main){
         this.main = main;
@@ -48,7 +39,9 @@ public class CategoriesController {
 
     private void generateAllCategoryItems() {
         categoryArea.getChildren().clear(); // clear existing, if any
-        categories.keySet().forEach(key -> generateCategoryItem(categories.get(key)));
+        categories.keySet().forEach(key -> {
+            if(key > 1) generateCategoryItem(categories.get(key));
+        });
     }
 
     public void generateCategoryItem(Category category){
@@ -96,10 +89,13 @@ public class CategoriesController {
     }
 
     public void refreshCategories(){
+        db = new Database();
         categoryArea.getChildren().clear();
         categories=db.getCategories(true);
         categories.keySet().forEach(key -> {
             generateCategoryItem(categories.get(key));
         });
+        main.refreshTaskList(main.getTasks());
+        main.refreshCache();
     }
 }

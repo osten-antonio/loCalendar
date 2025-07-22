@@ -84,7 +84,7 @@ public class TaskCreateController implements Initializable {
 
                     Parent categoryRoot = loader.load();
                     CategoryCreationController controller=loader.getController();
-
+                    controller.setMain(main);
                     controller.setTaskCreate(categorySelector,categories);
 
                     Stage categoryWindow = new Stage();
@@ -134,12 +134,22 @@ public class TaskCreateController implements Initializable {
 
     public void setMain(MainController main){ this.main = main;}
 
+    private Category getSelectedCategory(){
+        Category selectedCategory = null;
+        for(Category category:categories.values()){
+            if(category.getName().equals(categorySelector.getValue())){
+                selectedCategory = category;
+            }
+        }
+        if(selectedCategory == null) selectedCategory = categories.get(Collections.min(categories.keySet()));
+        return selectedCategory;
+    }
     @FXML
     private void createTask(){
         boolean valid = !taskTitle.getText().isBlank() && dueDate.getValue()!=null &&
                 prioritySelector.getValue() != null;
         if(valid){
-            long startTime = System.nanoTime();
+            Category selectedCategory = getSelectedCategory();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String selected = prioritySelector.getValue().toUpperCase();
             Priority selectedPriority = Priority.valueOf(selected);
@@ -150,8 +160,7 @@ public class TaskCreateController implements Initializable {
             Task resTask = new Task(taskTitle.getText(),taskBody.getText(),false,dueDate.getValue(),
                     LocalTime.of(dueHour.getValue(),dueMinute.getValue()), level,
                     String.format("FREQ=%s;INTERVAL=%s;UNTIL=%s",sqlFreq,sqlInterval,sqlEndDate),
-                    categories.get(Collections.max(categories.keySet()))
-            );
+                    selectedCategory);
             Database db = new Database();
             db.writeTask(resTask);
             db.closeConnection();
@@ -162,9 +171,6 @@ public class TaskCreateController implements Initializable {
             main.refreshCache();
             Stage stage = (Stage) taskTitle.getScene().getWindow();
             stage.close();
-            long endTime = System.nanoTime();
-            Benchmark.getInstance().getTime(startTime,endTime,3);
-            Benchmark.getInstance().getSpace(3);
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -196,7 +202,7 @@ public class TaskCreateController implements Initializable {
             boolean valid = !taskTitle.getText().isBlank() && dueDate.getValue() != null &&
                     !prioritySelector.getValue().isBlank();
             if (valid) {
-                long startTime = System.nanoTime();
+                Category selectedCategory = getSelectedCategory();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String selected = prioritySelector.getValue().toUpperCase();
                 Priority selectedPriority = Priority.valueOf(selected);
@@ -209,29 +215,22 @@ public class TaskCreateController implements Initializable {
                 Task resTask = new Task(taskTitle.getText(), taskBody.getText(), false, dueDate.getValue(),
                         LocalTime.of(dueHour.getValue(), dueMinute.getValue()), level,
                         String.format("FREQ=%s;INTERVAL=%s;UNTIL=%s", sqlFreq, sqlInterval, sqlEndDate),
-                        categories.get(Collections.max(categories.keySet()))
+                        selectedCategory
                 );
                 PriorityQueue<Task> mainTaskQueue = main.getTasks();
 
-                for(Task mainTask:main.getTasks()){
-                    if (mainTask.equals(prevTask)){
-                        mainTaskQueue.remove(mainTask);
-                        mainTaskQueue.add(resTask);
-                        break;
-                    }
-                }
+                mainTaskQueue.remove(task);
+                mainTaskQueue.add(resTask);
 
 
                 main.refreshCache();
-                db.updateTask(task, resTask);
+                main.refreshTaskList(main.getTasks());
+                db.updateTask(prevTask, resTask);
                 db.closeConnection();
                 main.refreshTaskList(mainTaskQueue);
 
                 Stage stage = (Stage) taskTitle.getScene().getWindow();
                 stage.close();
-                long endTime = System.nanoTime();
-                Benchmark.getInstance().getTime(startTime,endTime,4);
-                Benchmark.getInstance().getSpace(4);
             }
             else{
                 Alert alert = new Alert(Alert.AlertType.WARNING);

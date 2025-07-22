@@ -96,6 +96,7 @@ public class TaskItemController {
 
             Parent openTask = loader.load();
             OpenTaskController controller=loader.getController();
+            controller.setMain(main);
             controller.setTask(task);
             Stage taskWindow = new Stage();
             taskWindow.setTitle(task.getTitle());
@@ -122,16 +123,13 @@ public class TaskItemController {
         alert.setContentText("Click OK to proceed, or Cancel to abort.");
         alert.showAndWait().ifPresent(response -> {
             if (response.getText().equals("OK")) {
-                long startTime = System.nanoTime();
                 Database db = new Database();
                 db.deleteTask(task);
                 db.closeConnection();
                 PriorityQueue<Task> mainTasks = main.getTasks();
                 mainTasks.removeIf(task -> task.equals(this.task));
                 main.refreshTaskList(mainTasks);
-                long endTime = System.nanoTime();
-                Benchmark.getInstance().getTime(startTime,endTime,5);
-                Benchmark.getInstance().getSpace(5);
+                main.refreshCache();
             }
         });
     }

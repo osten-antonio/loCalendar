@@ -82,7 +82,7 @@ public class CategoryCreationController {
             Category resCategory = getResCategory();
 
             if(writeIntoDatabase(resCategory,db) != -1) {
-
+                main.getCategories().put(db.getRecentCategory(),resCategory);
                 categories.put(db.getRecentCategory(), resCategory);
                 parent.getItems().add(resCategory.getName());
                 parent.getItems().add("Create new");
