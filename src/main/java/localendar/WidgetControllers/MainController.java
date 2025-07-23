@@ -399,7 +399,6 @@ public class MainController implements Initializable {
                             controller.setRoot(root);
                             controller.setTask(instance);
 
-                            int dayOfMonth = instDate.getDayOfMonth();
                             dayToNodes.putIfAbsent(instDate, new PriorityQueue<>(Comparator.comparing(node -> {
                                 CalendarTaskItemController ctrl = (CalendarTaskItemController) node.getUserData();
                                 return ctrl.getTask().getDueTime();
@@ -421,7 +420,6 @@ public class MainController implements Initializable {
                             item.setUserData(controller);
                             controller.setRoot(root);
                             controller.setTask(task);
-                            int dayOfMonth = task.getDueDate().getDayOfMonth();
                             dayToNodes.putIfAbsent(taskDate, new PriorityQueue<>(Comparator.comparing(node -> {
                                 CalendarTaskItemController ctrl = (CalendarTaskItemController) node.getUserData();
                                 return ctrl.getTask().getDueTime();
@@ -441,22 +439,20 @@ public class MainController implements Initializable {
 
                 if (dayTasks != null) {
                     if (dayTasks.size() > 2) {
-                        if (dayTasks.size() > 2) {
-                            PriorityQueue<Node> cachedNodes = dayToNodes.get(actualDate);
-                            if (cachedNodes != null) {
-                                int count = 0;
-                                for (Node node : cachedNodes) {
-                                    if (count >= 2) break;
+                        PriorityQueue<Node> cachedNodes = dayToNodes.get(actualDate);
+                        if (cachedNodes != null) {
+                            int count = 0;
+                            for (Node node : cachedNodes) {
+                                if (count >= 2) break;
 
-                                    // remove node from previous parent if theres any
-                                    Parent parent = node.getParent();
-                                    if (parent instanceof AnchorPane) {
-                                        ((AnchorPane) parent).getChildren().remove(node);
-                                    }
-
-                                    monthDayBox.get(targetBoxIndex).getChildren().add(node);
-                                    count++;
+                                // remove node from previous parent if theres any
+                                Parent parent = node.getParent();
+                                if (parent instanceof AnchorPane) {
+                                    ((AnchorPane) parent).getChildren().remove(node);
                                 }
+
+                                monthDayBox.get(targetBoxIndex).getChildren().add(node);
+                                count++;
                             }
                         }
 
